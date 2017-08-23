@@ -75,6 +75,8 @@ public class Yatzy {
         for (int i = 0; i<players; i++)
         {
             scoreboards[i] = new Scoreboard();
+            for (int j = 0; j < scoreboards[i].diceCombinations.length; j++)
+                scoreboards[i].diceCombinations[j] = true;
         }
         dices = new int[5];
         diceToRoll = new boolean[5];
@@ -118,7 +120,6 @@ public class Yatzy {
         {
             case 1:
                 ArrayList<Pick> canPick = GetAviablePicks(player);
-                System.out.println(canPick.size());
                 if(canPick.size() >0) {
                     for (int i = 0; i < canPick.size(); i++)
                     {
@@ -143,14 +144,12 @@ public class Yatzy {
         int fives = ReturnNumOfNumInDices(5);
         int sixes = ReturnNumOfNumInDices(6);
 
-
         ArrayList<Pick> aviablePicks = new ArrayList<Pick>();
         //Check what picks are aviable
         if (scoreboards[player].diceCombinations[0] && ones > 0) //ettor
         {
             int[] n = {ones};
             aviablePicks.add(new Pick("Ettor", n));
-            System.out.println(aviablePicks.get(0).toString());
         }
         if (scoreboards[player].diceCombinations[1] && twos > 0) //tvåor
         {
@@ -177,7 +176,6 @@ public class Yatzy {
             int[] n = {sixes};
             aviablePicks.add(new Pick("Sexor", n));
         }
-
         if (scoreboards[player].diceCombinations[6]) //par
         {
             int[] value = new int[1];
@@ -453,11 +451,17 @@ public class Yatzy {
     public static int ReturnNumOfNumInDices(int n) //Returns the amount of number ns there are in dices array
     {
         int count = 0;
-        if(Arrays.asList(dices).contains(n))
+        boolean contains = false;
+        for (int dice : dices)
+        {
+            if(dice == n)
+                contains = true;
+        }
+        if(contains)
         {
             for (int i : dices)
             {
-                if(i == 1)
+                if(i == n)
                     count++;
             }
         }
@@ -512,15 +516,31 @@ public class Yatzy {
                 return 5 * numbers[0];
             case "Sexor":
                 return 6 * numbers[0];
-            case "Yatzy":
-                return 50;
-            default:
+            case "Ett par":
+                return (numbers[0]*2);
+            case "Två par":
+                return ((numbers[0]*2) + (numbers[1]*2));
+            case "Tretal":
+                return numbers[0] * 3;
+            case "Fyrtal":
+                return numbers[0] * 4;
+            case "Lilla Stege":
+                return 15;
+            case "Stora Stege":
+                return 21;
+            case "Chans":
                 int sum = 0;
                 for (int i : dices)
                 {
                     sum += i;
                 }
                 return sum;
+            case "Yatzy":
+                return 50;
+            default:
+                System.out.println("Faulty PickName");
+                return 0;
+
         }
     }
 

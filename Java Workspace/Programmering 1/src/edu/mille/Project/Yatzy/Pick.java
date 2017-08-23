@@ -18,6 +18,21 @@ public class Pick
 
     @Override
     public String toString() {
+        switch (pickName)
+        {
+            case "Ettor":
+                return pickName + " " + num[0] + "st";
+            case "Tvåor":
+                return pickName + " " + num[0] + "st";
+            case "Treor":
+                return pickName + " " + num[0] + "st";
+            case "Fyror":
+                return pickName + " " + num[0] + "st";
+            case "Femmor":
+                return pickName + " " + num[0] + "st";
+            case "Sexor":
+                return pickName + " " + num[0] + "st";
+        }
         return pickName;
     }
 }
