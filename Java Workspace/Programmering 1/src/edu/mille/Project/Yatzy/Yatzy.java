@@ -3,6 +3,7 @@ package edu.mille.Project.Yatzy;
 import com.sun.deploy.util.ArrayUtil;
 import com.sun.org.apache.bcel.internal.generic.NEW;
 import jdk.internal.dynalink.beans.StaticClass;
+import sun.security.x509.AVA;
 
 import javax.swing.plaf.synth.Region;
 import java.io.Console;
@@ -71,6 +72,10 @@ public class Yatzy {
 
     public static void Game(int players) throws InterruptedException {
         scoreboards = new Scoreboard[players];
+        for (int i = 0; i<players; i++)
+        {
+            scoreboards[i] = new Scoreboard();
+        }
         dices = new int[5];
         diceToRoll = new boolean[5];
 
@@ -88,9 +93,9 @@ public class Yatzy {
                 PrintDices();
 
                 //pick dice to keep
-                AfterRollPrompt();
+                AfterRollPrompt(n);
                 PromptEnterKey();
-                PrintAviablePicks(n);
+              //  PrintAviablePicks(n);
               //  PickDiceToKeep();
 
                 //continue to roll
@@ -102,7 +107,7 @@ public class Yatzy {
             turn++;
         }
     }
-    public static void AfterRollPrompt()
+    public static void AfterRollPrompt(int player)
     {
         System.out.println("Enter \"1\" to check aviable picks.");
         System.out.println("Enter \"2\" to choose what dice to keep.");
@@ -112,6 +117,14 @@ public class Yatzy {
         switch (select)
         {
             case 1:
+                ArrayList<Pick> canPick = GetAviablePicks(player);
+                System.out.println(canPick.size());
+                if(canPick.size() >0) {
+                    for (int i = 0; i < canPick.size(); i++)
+                    {
+                        System.out.println(canPick.get(i).toString());
+                    }
+                }
                 break;
             case 2:
                 break;
@@ -122,7 +135,7 @@ public class Yatzy {
         }
     }
 
-    public static void PrintAviablePicks(int player) {
+    public static ArrayList<Pick> GetAviablePicks(int player) {
         int ones = ReturnNumOfNumInDices(1);
         int twos = ReturnNumOfNumInDices(2);
         int threes = ReturnNumOfNumInDices(3);
@@ -314,38 +327,16 @@ public class Yatzy {
         {
             int[] sortedDiceArr = dices;
             Arrays.sort(sortedDiceArr);
-            if (dices[0] != 1)
-                return;
-            else if (dices[1] != 2)
-                return;
-            else if (dices[2] != 3)
-                return;
-            else if (dices[3] != 4)
-                return;
-            else if (dices[4] != 5)
-                return;
-            else
+            if (dices[0] == 1 && dices[1] == 2 && dices[2] == 3 && dices[3] == 4 && dices[4] == 5)
                 aviablePicks.add(new Pick("Lilla Stege"));
-
         }
 
         if (scoreboards[player].diceCombinations[11]) //Stora stege
         {
             int[] sortedDiceArr = dices;
             Arrays.sort(sortedDiceArr);
-            if (dices[1] != 2)
-                return;
-            else if (dices[2] != 3)
-                return;
-            else if (dices[3] != 4)
-                return;
-            else if (dices[4] != 5)
-                return;
-            else if (dices[5] != 6)
-                return;
-            else
+            if (dices[1] == 2 && dices[2] == 3 && dices[3] == 4 && dices[4] == 5 && dices[5] == 6)
                 aviablePicks.add(new Pick("Stora Stege"));
-
         }
 
         if (scoreboards[player].diceCombinations[12])//kåk
@@ -367,42 +358,40 @@ public class Yatzy {
                 temp.add(6);
             int[] n = ConvertFromIntegersToInts(temp); //Convert list to int array
             int biggestNum = 0;
-            if (n.length == 0)
-                return;
-            else {
+            if (n.length != 0)
+            {
                 for (int i = 0; i < n.length; i++) {
                     if (n[i] > biggestNum)
                         biggestNum = n[i];
                 }
-            }
-            values.add(biggestNum);
+                values.add(biggestNum);
 
-            //steg 2 mindre del
-            temp.clear();
-            if (ones >= 2 && 1 != biggestNum)
-                temp.add(1);
-            if (twos >= 2 && 2 != biggestNum)
-                temp.add(2);
-            if (threes >= 2 && 3 != biggestNum)
-                temp.add(3);
-            if (fours >= 2 && 4 != biggestNum)
-                temp.add(4);
-            if (fives >= 2 && 5 != biggestNum)
-                temp.add(5);
-            if (sixes >= 2 && 6 != biggestNum)
-                temp.add(6);
-            n = ConvertFromIntegersToInts(temp); //Convert list to int array
-            biggestNum = 0;
-            if (n.length == 0)
-                return;
-            else {
-                for (int i = 0; i < n.length; i++) {
-                    if (n[i] > biggestNum)
-                        biggestNum = n[i];
+                //steg 2 mindre del
+                temp.clear();
+                if (ones >= 2 && 1 != biggestNum)
+                    temp.add(1);
+                if (twos >= 2 && 2 != biggestNum)
+                    temp.add(2);
+                if (threes >= 2 && 3 != biggestNum)
+                    temp.add(3);
+                if (fours >= 2 && 4 != biggestNum)
+                    temp.add(4);
+                if (fives >= 2 && 5 != biggestNum)
+                    temp.add(5);
+                if (sixes >= 2 && 6 != biggestNum)
+                    temp.add(6);
+                n = ConvertFromIntegersToInts(temp); //Convert list to int array
+                biggestNum = 0;
+                if (n.length != 0)
+                {
+                    for (int i = 0; i < n.length; i++) {
+                        if (n[i] > biggestNum)
+                            biggestNum = n[i];
+                    }
                 }
+                values.add(biggestNum);
+                aviablePicks.add(new Pick("Kåk", ConvertFromIntegersToInts(values)));
             }
-            values.add(biggestNum);
-            aviablePicks.add(new Pick("Kåk", ConvertFromIntegersToInts(values)));
         }
 
         if (scoreboards[player].diceCombinations[13])//chans
@@ -414,6 +403,8 @@ public class Yatzy {
         {
             aviablePicks.add(new Pick("Yatzy", dices));
         }
+        Pick[] returnpicks = new Pick[aviablePicks.size()];
+        return aviablePicks;
     }
 
 
