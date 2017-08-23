@@ -90,7 +90,7 @@ public class Yatzy {
                 //pick dice to keep
                 AfterRollPrompt();
                 PromptEnterKey();
-              //  PrintAviablePicks(n);
+                PrintAviablePicks(n);
               //  PickDiceToKeep();
 
                 //continue to roll
@@ -407,12 +407,12 @@ public class Yatzy {
 
         if (scoreboards[player].diceCombinations[13])//chans
         {
-            aviablePicks.add(new Pick("Chans"));
+            aviablePicks.add(new Pick("Chans",dices));
         }
 
         if(scoreboards[player].diceCombinations[14]) //YATZY
         {
-            aviablePicks.add(new Pick("Yatzy"));
+            aviablePicks.add(new Pick("Yatzy", dices));
         }
     }
 
