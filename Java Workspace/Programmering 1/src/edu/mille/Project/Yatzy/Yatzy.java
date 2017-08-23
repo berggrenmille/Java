@@ -1,15 +1,5 @@
 package edu.mille.Project.Yatzy;
 
-import com.sun.deploy.util.ArrayUtil;
-import com.sun.org.apache.bcel.internal.generic.NEW;
-import jdk.internal.dynalink.beans.StaticClass;
-import sun.security.x509.AVA;
-
-import javax.swing.plaf.synth.Region;
-import java.io.Console;
-import java.io.IOException;
-import java.io.Reader;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
@@ -20,7 +10,7 @@ import java.util.concurrent.TimeUnit;
 public class Yatzy {
     public static String os;
 
-    public static Scoreboard[] scoreboards; //The players virtual yatzy list
+    public static Player[] players; //The players virtual yatzy list
     public static int[] dices; // All dices in action
     public static boolean[] diceToRoll; // Keeps track if dice[i] should be rolled
 
@@ -71,12 +61,12 @@ public class Yatzy {
     }
 
     public static void Game(int players) throws InterruptedException {
-        scoreboards = new Scoreboard[players];
+        Yatzy.players = new Player[players];
         for (int i = 0; i<players; i++)
         {
-            scoreboards[i] = new Scoreboard();
-            for (int j = 0; j < scoreboards[i].diceCombinations.length; j++)
-                scoreboards[i].diceCombinations[j] = true;
+            Yatzy.players[i] = new Player();
+            for (int j = 0; j < Yatzy.players[i].diceComboChecks.length; j++)
+                Yatzy.players[i].diceComboChecks[j] = true;
         }
         dices = new int[5];
         diceToRoll = new boolean[5];
@@ -136,6 +126,11 @@ public class Yatzy {
         }
     }
 
+    /*
+    *All available dice combinations are detected here.
+    *WARNING DARK MAGIC INSIDE*
+    * ENTER AT YOUR OWN RISK *
+     */
     public static ArrayList<Pick> GetAviablePicks(int player) {
         int ones = ReturnNumOfNumInDices(1);
         int twos = ReturnNumOfNumInDices(2);
@@ -146,37 +141,37 @@ public class Yatzy {
 
         ArrayList<Pick> aviablePicks = new ArrayList<Pick>();
         //Check what picks are aviable
-        if (scoreboards[player].diceCombinations[0] && ones > 0) //ettor
+        if (players[player].diceComboChecks[0] && ones > 0) //ettor
         {
             int[] n = {ones};
             aviablePicks.add(new Pick("Ettor", n));
         }
-        if (scoreboards[player].diceCombinations[1] && twos > 0) //tvåor
+        if (players[player].diceComboChecks[1] && twos > 0) //tvåor
         {
             int[] n = {twos};
             aviablePicks.add(new Pick("Tvåor", n));
         }
-        if (scoreboards[player].diceCombinations[2] && threes > 0) //treor
+        if (players[player].diceComboChecks[2] && threes > 0) //treor
         {
             int[] n = {threes};
             aviablePicks.add(new Pick("Treor", n));
         }
-        if (scoreboards[player].diceCombinations[3] && fours > 0) //fyror
+        if (players[player].diceComboChecks[3] && fours > 0) //fyror
         {
             int[] n = {fours};
             aviablePicks.add(new Pick("Fyror", n));
         }
-        if (scoreboards[player].diceCombinations[4] && fives > 0) //femmor
+        if (players[player].diceComboChecks[4] && fives > 0) //femmor
         {
             int[] n = {fives};
             aviablePicks.add(new Pick("Femmor", n));
         }
-        if (scoreboards[player].diceCombinations[5] && sixes > 0) //sexor
+        if (players[player].diceComboChecks[5] && sixes > 0) //sexor
         {
             int[] n = {sixes};
             aviablePicks.add(new Pick("Sexor", n));
         }
-        if (scoreboards[player].diceCombinations[6]) //par
+        if (players[player].diceComboChecks[6]) //par
         {
             int[] value = new int[1];
             if(ones >= 2) {
@@ -205,7 +200,7 @@ public class Yatzy {
             }
         }
 
-        if (scoreboards[player].diceCombinations[7]) //två par
+        if (players[player].diceComboChecks[7]) //två par
         {
             ArrayList<Integer> doublePairValue = new ArrayList<Integer>();
             //steg ett leta efter dubbla av samma
@@ -281,7 +276,7 @@ public class Yatzy {
                 aviablePicks.add(new Pick("Två par", ConvertFromIntegersToInts(doublePairValue)));
         }
 
-        if (scoreboards[player].diceCombinations[8]) //tretal
+        if (players[player].diceComboChecks[8]) //tretal
         {
             if (ones >= 3 || twos >= 3 || threes >= 3 || fours >= 3 || fives >= 3 || sixes >= 3) {
                 ArrayList<Integer> temp = new ArrayList<Integer>();
@@ -302,7 +297,7 @@ public class Yatzy {
                 aviablePicks.add(new Pick("Tretal", n));
             }
         }
-        if (scoreboards[player].diceCombinations[9])//fyrtal
+        if (players[player].diceComboChecks[9])//fyrtal
             if (ones >= 4 || twos >= 4 || threes >= 4 || fours >= 4 || fives >= 4 || sixes >= 4) {
                 ArrayList<Integer> temp = new ArrayList<Integer>();
                 if (ones >= 4)
@@ -322,7 +317,7 @@ public class Yatzy {
                 aviablePicks.add(new Pick("Fyrtal", n));
             }
 
-        if (scoreboards[player].diceCombinations[10]) //Lilla stege
+        if (players[player].diceComboChecks[10]) //Lilla stege
         {
             int[] sortedDiceArr = dices;
             Arrays.sort(sortedDiceArr);
@@ -330,7 +325,7 @@ public class Yatzy {
                 aviablePicks.add(new Pick("Lilla Stege"));
         }
 
-        if (scoreboards[player].diceCombinations[11]) //Stora stege
+        if (players[player].diceComboChecks[11]) //Stora stege
         {
             int[] sortedDiceArr = dices;
             Arrays.sort(sortedDiceArr);
@@ -338,7 +333,7 @@ public class Yatzy {
                 aviablePicks.add(new Pick("Stora Stege"));
         }
 
-        if (scoreboards[player].diceCombinations[12])//kåk
+        if (players[player].diceComboChecks[12])//kåk
         {
             ArrayList<Integer> values = new ArrayList<Integer>();
             //steg 1
@@ -393,13 +388,14 @@ public class Yatzy {
             }
         }
 
-        if (scoreboards[player].diceCombinations[13])//chans
+        if (players[player].diceComboChecks[13])//chans
         {
             aviablePicks.add(new Pick("Chans",dices));
         }
 
-        if(scoreboards[player].diceCombinations[14]) //YATZY
+        if(players[player].diceComboChecks[14]) //YATZY
         {
+            if(ones == 5 || twos == 5 || threes == 5 || fours == 5 || fives == 5 || sixes == 5)
             aviablePicks.add(new Pick("Yatzy", dices));
         }
         Pick[] returnpicks = new Pick[aviablePicks.size()];
@@ -407,11 +403,13 @@ public class Yatzy {
     }
 
 
+    //Pick what dice to keep
     public static void PickDiceToKeep()
     {
         //System.out
     }
 
+    //Roll all active dice
     public static void RollDice()
     {
         for (int i = 0; i < dices.length; i++)
@@ -421,12 +419,14 @@ public class Yatzy {
         }
     }
 
+    //activate all dice and roll them
     public static void RollAllDice() //Roll all dice
     {
-        for (int i = 0; i < dices.length; i++)
+        for(boolean b : diceToRoll)
         {
-            dices[i] = ran.nextInt(6)+1;
+            b = true;
         }
+        RollDice();
     }
 
     public static void ResetDices()
@@ -544,34 +544,38 @@ public class Yatzy {
         }
     }
 
-    public static void SetScoreAndTickScoreboard(int player, String diceCombo) //adds the score to the players score + disables that dice combo to be used again for that player
+    public static void ApplyScore(int player, Pick combo)
     {
-        scoreboards[player].totalScore += GetScore(diceCombo, dices);
-        switch (diceCombo)
+        players[player].score += GetScore(combo, dices);
+    }
+
+    public static void TickDiceCombo(int player, Pick combo) //adds the score to the players score + disables that dice combo to be used again for that player
+    {
+        switch (combo.pickName)
         {
             case "Ettor":
-                scoreboards[player].diceCombinations[0] = false;
+                players[player].diceComboChecks[0] = false;
                 break;
             case "Tvåor":
-                scoreboards[player].diceCombinations[1] = false;
+                players[player].diceComboChecks[1] = false;
                 break;
             case "Treor":
-                scoreboards[player].diceCombinations[2] = false;
+                players[player].diceComboChecks[2] = false;
                 break;
             case "Fyror":
-                scoreboards[player].diceCombinations[3] = false;
+                players[player].diceComboChecks[3] = false;
                 break;
             case "Femmor":
-                scoreboards[player].diceCombinations[4] = false;
+                players[player].diceComboChecks[4] = false;
                 break;
             case "Sexor":
-                scoreboards[player].diceCombinations[5] = false;
+                players[player].diceComboChecks[5] = false;
                 break;
             case "Blank":
                 System.out.println("Player "+player+ " pleace choose what to cross");
                 System.out.println("Enter a number and press enter: ");
                 int i = GetInt();
-                scoreboards[player].diceCombinations[i-1] = false;
+                players[player].diceComboChecks[i-1] = false;
                 break;
         }
     }
