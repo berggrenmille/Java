@@ -82,16 +82,11 @@ public class Yatzy {
                 System.out.println("Player " + (n + 1));
                 PromptEnterKey();
                 RollDice(); //First Roll
-                PrintDices();
+                PrintDice();
 
-                //pick dice to keep
                 AfterRollPrompt(n);
                 PromptEnterKey();
-              //  PrintAviablePicks(n);
-              //  PickDiceToKeep();
-
                 //continue to roll
-                PromptEnterKey();
                 ClearConsole();
 
 
@@ -99,30 +94,57 @@ public class Yatzy {
             turn++;
         }
     }
-    public static void AfterRollPrompt(int player)
+    public static void AfterRollPrompt(int player) throws InterruptedException
     {
-        System.out.println("Enter \"1\" to check aviable picks.");
+        System.out.println("Enter \"1\" to check available picks.");
         System.out.println("Enter \"2\" to choose what dice to keep.");
-        System.out.println("Enter \"4\" to roll active dices.");
+        System.out.println("Enter \"3\" to roll active dices.");
         System.out.println("Enter \"4\" to roll all dice.");
+        System.out.println("Enter \"5\" to exit");
         int select = GetInt();
         switch (select)
         {
             case 1:
                 ArrayList<Pick> canPick = GetAviablePicks(player);
                 if(canPick.size() >0) {
-                    for (int i = 0; i < canPick.size(); i++)
+                    System.out.println("Enter: 0 to cancel");
+                    for (int i = 0; i < canPick.size(); i++) {
+                        System.out.println("Enter: " + (i + 1) + " to score: " + canPick.get(i).toString());
+                    }
+                    int selection = GetInt();
+                    if (selection == 0)
                     {
-                        System.out.println(canPick.get(i).toString());
+                        ClearConsole();
+                        PrintDice();
+                        AfterRollPrompt(player);
+                    }
+                    else if (selection > canPick.size())
+                    {
+                        ClearConsole();
+                        System.out.println("Faulty input try again");
+                        PrintDice();
+                        AfterRollPrompt(player);
+                    }
+                    else
+                    {
+                        TickDiceCombo(player, canPick.get(selection-1));
+                        ApplyScore(player, canPick.get(selection-1));
+                        System.out.println("Current score: "+ players[player].score);
                     }
                 }
                 break;
             case 2:
+                PickDiceToKeep(player);
                 break;
             case 3:
                 break;
             case 4:
                 break;
+            case 5:
+                System.exit(0);
+                break;
+            default:
+                System.exit(0);
         }
     }
 
@@ -139,64 +161,64 @@ public class Yatzy {
         int fives = ReturnNumOfNumInDices(5);
         int sixes = ReturnNumOfNumInDices(6);
 
-        ArrayList<Pick> aviablePicks = new ArrayList<Pick>();
+        ArrayList<Pick> availablePicks = new ArrayList<Pick>();
         //Check what picks are aviable
         if (players[player].diceComboChecks[0] && ones > 0) //ettor
         {
             int[] n = {ones};
-            aviablePicks.add(new Pick("Ettor", n));
+            availablePicks.add(new Pick("Ettor", n));
         }
         if (players[player].diceComboChecks[1] && twos > 0) //tvåor
         {
             int[] n = {twos};
-            aviablePicks.add(new Pick("Tvåor", n));
+            availablePicks.add(new Pick("Tvåor", n));
         }
         if (players[player].diceComboChecks[2] && threes > 0) //treor
         {
             int[] n = {threes};
-            aviablePicks.add(new Pick("Treor", n));
+            availablePicks.add(new Pick("Treor", n));
         }
         if (players[player].diceComboChecks[3] && fours > 0) //fyror
         {
             int[] n = {fours};
-            aviablePicks.add(new Pick("Fyror", n));
+            availablePicks.add(new Pick("Fyror", n));
         }
         if (players[player].diceComboChecks[4] && fives > 0) //femmor
         {
             int[] n = {fives};
-            aviablePicks.add(new Pick("Femmor", n));
+            availablePicks.add(new Pick("Femmor", n));
         }
         if (players[player].diceComboChecks[5] && sixes > 0) //sexor
         {
             int[] n = {sixes};
-            aviablePicks.add(new Pick("Sexor", n));
+            availablePicks.add(new Pick("Sexor", n));
         }
         if (players[player].diceComboChecks[6]) //par
         {
             int[] value = new int[1];
             if(ones >= 2) {
                 value[0] = 1;
-                aviablePicks.add(new Pick("Ett par", value));
+                availablePicks.add(new Pick("Ett par", value));
             }
             if(twos >= 2) {
                 value[0] = 2;
-                aviablePicks.add(new Pick("Ett par", value));
+                availablePicks.add(new Pick("Ett par", value));
             }
             if(threes >= 2) {
                 value[0] = 3;
-                aviablePicks.add(new Pick("Ett par", value));
+                availablePicks.add(new Pick("Ett par", value));
             }
             if(fours >= 2) {
                 value[0] = 4;
-                aviablePicks.add(new Pick("Ett par", value));
+                availablePicks.add(new Pick("Ett par", value));
             }
             if(fives >= 2) {
                 value[0] = 5;
-                aviablePicks.add(new Pick("Ett par", value));
+                availablePicks.add(new Pick("Ett par", value));
             }
             if(sixes >= 2) {
                 value[0] = 6;
-                aviablePicks.add(new Pick("Ett par", value));
+                availablePicks.add(new Pick("Ett par", value));
             }
         }
 
@@ -208,42 +230,42 @@ public class Yatzy {
             {
                 doublePairValue.add(1);
                 doublePairValue.add(1);
-                aviablePicks.add(new Pick("Två par", ConvertFromIntegersToInts(doublePairValue)));
+                availablePicks.add(new Pick("Två par", ConvertFromIntegersToInts(doublePairValue)));
                 doublePairValue.clear();
             }
             if(twos >= 4)
             {
                 doublePairValue.add(2);
                 doublePairValue.add(2);
-                aviablePicks.add(new Pick("Två par", ConvertFromIntegersToInts(doublePairValue)));
+                availablePicks.add(new Pick("Två par", ConvertFromIntegersToInts(doublePairValue)));
                 doublePairValue.clear();
             }
             if(threes >= 4)
             {
                 doublePairValue.add(3);
                 doublePairValue.add(3);
-                aviablePicks.add(new Pick("Två par", ConvertFromIntegersToInts(doublePairValue)));
+                availablePicks.add(new Pick("Två par", ConvertFromIntegersToInts(doublePairValue)));
                 doublePairValue.clear();
             }
             if(fours >= 4)
             {
                 doublePairValue.add(4);
                 doublePairValue.add(4);
-                aviablePicks.add(new Pick("Två par", ConvertFromIntegersToInts(doublePairValue)));
+                availablePicks.add(new Pick("Två par", ConvertFromIntegersToInts(doublePairValue)));
                 doublePairValue.clear();
             }
             if(fives >= 4)
             {
                 doublePairValue.add(5);
                 doublePairValue.add(5);
-                aviablePicks.add(new Pick("Två par", ConvertFromIntegersToInts(doublePairValue)));
+                availablePicks.add(new Pick("Två par", ConvertFromIntegersToInts(doublePairValue)));
                 doublePairValue.clear();
             }
             if(sixes>= 4)
             {
                 doublePairValue.add(6);
                 doublePairValue.add(6);
-                aviablePicks.add(new Pick("Två par", ConvertFromIntegersToInts(doublePairValue)));
+                availablePicks.add(new Pick("Två par", ConvertFromIntegersToInts(doublePairValue)));
                 doublePairValue.clear();
             }
 
@@ -273,7 +295,7 @@ public class Yatzy {
                 doublePairValue.add(6);
             }
             if(doublePairValue.size() == 2)
-                aviablePicks.add(new Pick("Två par", ConvertFromIntegersToInts(doublePairValue)));
+                availablePicks.add(new Pick("Två par", ConvertFromIntegersToInts(doublePairValue)));
         }
 
         if (players[player].diceComboChecks[8]) //tretal
@@ -294,7 +316,7 @@ public class Yatzy {
                     temp.add(6);
 
                 int[] n = ConvertFromIntegersToInts(temp); //Convert list to int array
-                aviablePicks.add(new Pick("Tretal", n));
+                availablePicks.add(new Pick("Tretal", n));
             }
         }
         if (players[player].diceComboChecks[9])//fyrtal
@@ -314,7 +336,7 @@ public class Yatzy {
                     temp.add(6);
 
                 int[] n = ConvertFromIntegersToInts(temp); //Convert list to int array
-                aviablePicks.add(new Pick("Fyrtal", n));
+                availablePicks.add(new Pick("Fyrtal", n));
             }
 
         if (players[player].diceComboChecks[10]) //Lilla stege
@@ -322,7 +344,7 @@ public class Yatzy {
             int[] sortedDiceArr = dices;
             Arrays.sort(sortedDiceArr);
             if (dices[0] == 1 && dices[1] == 2 && dices[2] == 3 && dices[3] == 4 && dices[4] == 5)
-                aviablePicks.add(new Pick("Lilla Stege"));
+                availablePicks.add(new Pick("Lilla Stege"));
         }
 
         if (players[player].diceComboChecks[11]) //Stora stege
@@ -330,7 +352,7 @@ public class Yatzy {
             int[] sortedDiceArr = dices;
             Arrays.sort(sortedDiceArr);
             if (dices[1] == 2 && dices[2] == 3 && dices[3] == 4 && dices[4] == 5 && dices[5] == 6)
-                aviablePicks.add(new Pick("Stora Stege"));
+                availablePicks.add(new Pick("Stora Stege"));
         }
 
         if (players[player].diceComboChecks[12])//kåk
@@ -384,29 +406,46 @@ public class Yatzy {
                     }
                 }
                 values.add(biggestNum);
-                aviablePicks.add(new Pick("Kåk", ConvertFromIntegersToInts(values)));
+                availablePicks.add(new Pick("Kåk", ConvertFromIntegersToInts(values)));
             }
         }
 
         if (players[player].diceComboChecks[13])//chans
         {
-            aviablePicks.add(new Pick("Chans",dices));
+            availablePicks.add(new Pick("Chans",dices));
         }
 
         if(players[player].diceComboChecks[14]) //YATZY
         {
             if(ones == 5 || twos == 5 || threes == 5 || fours == 5 || fives == 5 || sixes == 5)
-            aviablePicks.add(new Pick("Yatzy", dices));
+            availablePicks.add(new Pick("Yatzy", dices));
         }
-        Pick[] returnpicks = new Pick[aviablePicks.size()];
-        return aviablePicks;
+        Pick[] returnpicks = new Pick[availablePicks.size()];
+        return availablePicks;
     }
 
 
     //Pick what dice to keep
-    public static void PickDiceToKeep()
+    public static void PickDiceToKeep(int player) throws InterruptedException
     {
-        //System.out
+        System.out.println("Do you want to keep any of the dice?");
+        System.out.println("Enter: 1 to toggle dice 1, 2 for dice 2 etc.");
+        System.out.println("*Only enter one number per row*");
+        int n = -1;
+        while(n != 0)
+        {
+            n = GetInt();
+            if(n != 0) {
+                diceToRoll[n - 1] = !diceToRoll[n - 1];
+                if (diceToRoll[n - 1] == true)
+                    System.out.println("Dice: " + n + " is now activated!");
+                else
+                    System.out.println("Dice: " + n + " is now deactivated!");
+            }
+        }
+        ClearConsole();
+        PrintDice();
+        AfterRollPrompt(player);
     }
 
     //Roll all active dice
@@ -437,14 +476,14 @@ public class Yatzy {
         }
     }
 
-    public static void PrintDices()
+    public static void PrintDice()
     {
         for (int i = 0; i < dices.length; i++)
         {
             if(diceToRoll[i] == true)
-                System.out.println("Dice "+(i+1) + " rolled: " + dices[i]);
+                System.out.println("Dice "+(i+1) + " rolls: " + dices[i]);
             else
-                System.out.println("Dice "+(i+1) + " stayed at: " + dices[i]);
+                System.out.println("Dice "+(i+1) + " stays: " + dices[i]);
         }
     }
 
@@ -582,8 +621,8 @@ public class Yatzy {
 
     public static void HowToInformation() throws  InterruptedException
     {
-        ClearConsole(); //Make room in console
-        System.out.println("HOW TO PLAY: ..."); //info
+        ClearConsole();
+        System.out.println("HOW TO PLAY: ...");
         PromptEnterKey();
         application();//return to main menu
     }
