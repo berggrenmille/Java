@@ -2,6 +2,7 @@ package edu.mille.Project.Yatzy;
 
 public class Player
 {
+    public String playerName;
     public int score = 0;
     boolean[] diceComboChecks;
 

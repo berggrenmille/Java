@@ -12,6 +12,7 @@ public class Yatzy {
 
     public static Player[] players; //The players virtual yatzy list
     public static int[] dices; // All dices in action
+    public static int count = 1;
     public static boolean[] diceToRoll; // Keeps track if dice[i] should be rolled
 
     public static Scanner s; //Reads input
@@ -67,6 +68,12 @@ public class Yatzy {
             Yatzy.players[i] = new Player();
             for (int j = 0; j < Yatzy.players[i].diceComboChecks.length; j++)
                 Yatzy.players[i].diceComboChecks[j] = true;
+            for (int k = 0; k < players; k++)
+            {
+                System.out.println("Player "+(k+1)+" please enter your name: ");
+                Yatzy.players[k].playerName = s.nextLine();
+            }
+
         }
         dices = new int[5];
         diceToRoll = new boolean[5];
@@ -79,72 +86,101 @@ public class Yatzy {
                 ResetDices(); //Make all dices rollable
                 //First throw
                 System.out.println("Omgång: " + (turn + 1));
-                System.out.println("Player " + (n + 1));
+                System.out.println(Yatzy.players[n].playerName);
                 PromptEnterKey();
                 RollDice(); //First Roll
                 PrintDice();
 
                 AfterRollPrompt(n);
+                count = 1;
                 PromptEnterKey();
                 //continue to roll
                 ClearConsole();
-
-
             }
             turn++;
         }
+        //game finished
+
     }
     public static void AfterRollPrompt(int player) throws InterruptedException
     {
-        System.out.println("Enter \"1\" to check available picks.");
-        System.out.println("Enter \"2\" to choose what dice to keep.");
-        System.out.println("Enter \"3\" to roll active dices.");
-        System.out.println("Enter \"4\" to roll all dice.");
-        System.out.println("Enter \"5\" to exit");
-        int select = GetInt();
-        switch (select)
+        if(count != 3)
         {
-            case 1:
-                ArrayList<Pick> canPick = GetAviablePicks(player);
-                if(canPick.size() >0) {
-                    System.out.println("Enter: 0 to cancel");
-                    for (int i = 0; i < canPick.size(); i++) {
-                        System.out.println("Enter: " + (i + 1) + " to score: " + canPick.get(i).toString());
-                    }
-                    int selection = GetInt();
-                    if (selection == 0)
-                    {
-                        ClearConsole();
-                        PrintDice();
-                        AfterRollPrompt(player);
-                    }
-                    else if (selection > canPick.size())
-                    {
-                        ClearConsole();
-                        System.out.println("Faulty input try again");
-                        PrintDice();
-                        AfterRollPrompt(player);
-                    }
-                    else
-                    {
-                        TickDiceCombo(player, canPick.get(selection-1));
-                        ApplyScore(player, canPick.get(selection-1));
-                        System.out.println("Current score: "+ players[player].score);
-                    }
-                }
-                break;
-            case 2:
-                PickDiceToKeep(player);
-                break;
-            case 3:
-                break;
-            case 4:
-                break;
-            case 5:
-                System.exit(0);
-                break;
-            default:
-                System.exit(0);
+            System.out.println("Enter \"1\" to check available picks.");
+            System.out.println("Enter \"2\" to choose what dice to keep.");
+            System.out.println("Enter \"3\" to roll active dices.");
+            System.out.println("Enter \"4\" to roll all dice.");
+            System.out.println("Enter \"5\" to exit application");
+            int select = GetInt();
+
+            switch (select) {
+                case 1:
+                    ShowAvailablePicks(player);
+                    break;
+                case 2:
+                    PickDiceToKeep(player);
+                    break;
+                case 3:
+                    count++;
+                    RollDice();
+                    ClearConsole();
+                    PrintDice();
+                    AfterRollPrompt(player);
+                    break;
+                case 4:
+                    count++;
+                    RollAllDice();
+                    ClearConsole();
+                    PrintDice();
+                    AfterRollPrompt(player);
+                    break;
+                case 5:
+                    System.exit(0);
+                    break;
+                default:
+                    System.exit(0);
+            }
+        }
+        else
+        {
+            System.out.println("Enter \"1\" to check available picks.");
+            System.out.println("Enter \"5\" to exit application");
+            int select = GetInt();
+            switch (select) {
+                case 1:
+                    ShowAvailablePicks(player);
+                    break;
+                case 5:
+                    System.exit(0);
+                    break;
+                default:
+                    System.exit(0);
+            }
+        }
+    }
+    public static void ShowAvailablePicks(int player)  throws InterruptedException
+    {
+        ArrayList<Pick> canPick = GetAvailablePicks(player);
+        if (canPick.size() > 0) {
+            System.out.println("Enter: 0 to cancel");
+            for (int i = 0; i < canPick.size(); i++) {
+                System.out.println("Enter: " + (i + 1) + " to score: " + canPick.get(i).toString());
+            }
+            int selection = GetInt();
+            if (selection == 0) {
+                ClearConsole();
+                PrintDice();
+                AfterRollPrompt(player);
+            } else if (selection > canPick.size()) {
+                ClearConsole();
+                System.out.println("Faulty input try again");
+                PrintDice();
+                AfterRollPrompt(player);
+            } else {
+                TickDiceCombo(player, canPick.get(selection - 1));
+                ApplyScore(player, canPick.get(selection - 1));
+                System.out.println("Current score: " + players[player].score);
+            }
         }
     }
 
@@ -153,7 +189,7 @@ public class Yatzy {
     *WARNING DARK MAGIC INSIDE*
     * ENTER AT YOUR OWN RISK *
      */
-    public static ArrayList<Pick> GetAviablePicks(int player) {
+    public static ArrayList<Pick> GetAvailablePicks(int player) {
         int ones = ReturnNumOfNumInDices(1);
         int twos = ReturnNumOfNumInDices(2);
         int threes = ReturnNumOfNumInDices(3);
@@ -429,7 +465,8 @@ public class Yatzy {
     public static void PickDiceToKeep(int player) throws InterruptedException
     {
         System.out.println("Do you want to keep any of the dice?");
-        System.out.println("Enter: 1 to toggle dice 1, 2 for dice 2 etc.");
+        System.out.println("Enter: 0 to return.");
+        System.out.println("Enter: 1 to toggle dice 1, 2 for dice 2 etc...");
         System.out.println("*Only enter one number per row*");
         int n = -1;
         while(n != 0)
@@ -481,9 +518,9 @@ public class Yatzy {
         for (int i = 0; i < dices.length; i++)
         {
             if(diceToRoll[i] == true)
-                System.out.println("Dice "+(i+1) + " rolls: " + dices[i]);
+                System.out.println("Dice "+(i+1) + " shows: " + dices[i]);
             else
-                System.out.println("Dice "+(i+1) + " stays: " + dices[i]);
+                System.out.println("Dice "+(i+1) + " stays at: " + dices[i]);
         }
     }
 

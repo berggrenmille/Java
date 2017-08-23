@@ -25,16 +25,15 @@
       <file leaf-file-name="Yatzy.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/edu/mille/Project/Yatzy/Yatzy.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="305">
-              <caret line="143" column="31" lean-forward="false" selection-start-line="143" selection-start-column="31" selection-end-line="143" selection-end-column="31" />
+            <state relative-caret-position="645">
+              <caret line="102" column="0" lean-forward="false" selection-start-line="102" selection-start-column="0" selection-end-line="102" selection-end-column="0" />
               <folding>
-                <element signature="method#GetAviablePicks#0;class#Yatzy#0" expanded="false" />
-                <element signature="e#5380#5386#0" expanded="true" />
-                <element signature="e#7537#7546#0" expanded="true" />
-                <element signature="e#10246#10255#0" expanded="true" />
-                <element signature="e#11029#11038#0" expanded="true" />
-                <element signature="e#12360#12369#0" expanded="true" />
-                <element signature="e#12445#12454#0" expanded="true" />
+                <element signature="e#6553#6559#0" expanded="true" />
+                <element signature="e#8710#8719#0" expanded="true" />
+                <element signature="e#11419#11428#0" expanded="true" />
+                <element signature="e#12202#12211#0" expanded="true" />
+                <element signature="e#13533#13542#0" expanded="true" />
+                <element signature="e#13618#13627#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -43,8 +42,18 @@
       <file leaf-file-name="Pick.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/edu/mille/Project/Yatzy/Pick.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="306">
-              <caret line="38" column="0" lean-forward="false" selection-start-line="38" selection-start-column="0" selection-end-line="38" selection-end-column="0" />
+            <state relative-caret-position="51">
+              <caret line="3" column="1" lean-forward="true" selection-start-line="3" selection-start-column="1" selection-end-line="3" selection-end-column="1" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Player.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/edu/mille/Project/Yatzy/Player.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="68">
+              <caret line="4" column="25" lean-forward="false" selection-start-line="4" selection-start-column="25" selection-end-line="4" selection-end-column="25" />
               <folding />
             </state>
           </provider>
@@ -59,6 +68,11 @@
         <option value="Class" />
       </list>
     </option>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>printdice</find>
+    </findStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
@@ -450,12 +464,12 @@
       <workItem from="1503501670346" duration="686000" />
       <workItem from="1503502874208" duration="774000" />
       <workItem from="1503511219636" duration="1283000" />
-      <workItem from="1503513506069" duration="3746000" />
+      <workItem from="1503513506069" duration="5479000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="66189000" />
+    <option name="totallyTimeSpent" value="67922000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -469,7 +483,7 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.4878049" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4878049" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -816,27 +830,33 @@
     </entry>
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_144/src.zip!/java/util/function/ToIntFunction.java" />
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_131/src.zip!/java/util/ArrayList.java" />
-    <entry file="file://$PROJECT_DIR$/src/edu/mille/Project/Yatzy/Player.java" />
     <entry file="file://$PROJECT_DIR$/src/edu/mille/Project/Yatzy/Pick.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="38" column="0" lean-forward="false" selection-start-line="38" selection-start-column="0" selection-end-line="38" selection-end-column="0" />
+        <state relative-caret-position="51">
+          <caret line="3" column="1" lean-forward="true" selection-start-line="3" selection-start-column="1" selection-end-line="3" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/edu/mille/Project/Yatzy/Player.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" column="25" lean-forward="false" selection-start-line="4" selection-start-column="25" selection-end-line="4" selection-end-column="25" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/edu/mille/Project/Yatzy/Yatzy.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="305">
-          <caret line="143" column="31" lean-forward="false" selection-start-line="143" selection-start-column="31" selection-end-line="143" selection-end-column="31" />
+        <state relative-caret-position="645">
+          <caret line="102" column="0" lean-forward="false" selection-start-line="102" selection-start-column="0" selection-end-line="102" selection-end-column="0" />
           <folding>
-            <element signature="method#GetAviablePicks#0;class#Yatzy#0" expanded="false" />
-            <element signature="e#5380#5386#0" expanded="true" />
-            <element signature="e#7537#7546#0" expanded="true" />
-            <element signature="e#10246#10255#0" expanded="true" />
-            <element signature="e#11029#11038#0" expanded="true" />
-            <element signature="e#12360#12369#0" expanded="true" />
-            <element signature="e#12445#12454#0" expanded="true" />
+            <element signature="e#6553#6559#0" expanded="true" />
+            <element signature="e#8710#8719#0" expanded="true" />
+            <element signature="e#11419#11428#0" expanded="true" />
+            <element signature="e#12202#12211#0" expanded="true" />
+            <element signature="e#13533#13542#0" expanded="true" />
+            <element signature="e#13618#13627#0" expanded="true" />
           </folding>
         </state>
       </provider>
