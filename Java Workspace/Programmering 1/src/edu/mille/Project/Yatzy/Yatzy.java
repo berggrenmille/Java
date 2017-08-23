@@ -150,6 +150,7 @@ public class Yatzy {
         {
             int[] n = {ones};
             aviablePicks.add(new Pick("Ettor", n));
+            System.out.println(aviablePicks.get(0).toString());
         }
         if (scoreboards[player].diceCombinations[1] && twos > 0) //tvåor
         {
