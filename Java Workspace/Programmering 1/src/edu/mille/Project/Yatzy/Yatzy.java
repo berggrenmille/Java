@@ -26,14 +26,14 @@ public class Yatzy {
     public static Scanner s; //Reads input
     public static Random ran; //generates random numbers
     public static boolean running = true;
-    public static void main(String[] args)  throws InterruptedException//Setup
+
+    public static void main(String[] args) throws InterruptedException//Setup
     {
         s = new Scanner(System.in);
         ran = new Random();
         os = System.getProperty("os.name");
         System.out.println(os);
-        while (running)
-        {
+        while (running) {
             ClearConsole();
             application();
 
@@ -42,7 +42,7 @@ public class Yatzy {
         s.close();
     }
 
-    public static void application()  throws InterruptedException //Main menu
+    public static void application() throws InterruptedException //Main menu
     {
         System.out.println("Yatzy Emulator 6000");
         System.out.println("1: Play alone");
@@ -50,8 +50,7 @@ public class Yatzy {
         System.out.println("3: How to play");
         System.out.println("4: Exit");
         int menuPick = GetInt();
-        switch (menuPick)
-        {
+        switch (menuPick) {
             case 1:
                 Game(1);
                 break;
@@ -70,44 +69,60 @@ public class Yatzy {
         }
     }
 
-    public static void Game(int players)  throws InterruptedException
-    {
+    public static void Game(int players) throws InterruptedException {
         scoreboards = new Scoreboard[players];
         dices = new int[5];
         diceToRoll = new boolean[5];
 
         int turn = 0;
-        while (turn < 15)
-        {
+        while (turn < 15) {
             ClearConsole();
-            for (int n = 0; n < players; n++)
-            {
+            for (int n = 0; n < players; n++) {
                 //Game logic
                 ResetDices(); //Make all dices rollable
                 //First throw
                 System.out.println("Omgång: " + (turn + 1));
-                System.out.println("Player "+(n+1));
+                System.out.println("Player " + (n + 1));
                 PromptEnterKey();
                 RollDice(); //First Roll
                 PrintDices();
 
                 //pick dice to keep
-                PrintAviablePicks(n);
-                PickDiceToKeep();
+                AfterRollPrompt();
+                PromptEnterKey();
+              //  PrintAviablePicks(n);
+              //  PickDiceToKeep();
 
                 //continue to roll
                 PromptEnterKey();
                 ClearConsole();
 
 
-
             }
             turn++;
         }
     }
-
-    public static void PrintAviablePicks(int player)
+    public static void AfterRollPrompt()
     {
+        System.out.println("Enter \"1\" to check aviable picks.");
+        System.out.println("Enter \"2\" to choose what dice to keep.");
+        System.out.println("Enter \"4\" to roll active dices.");
+        System.out.println("Enter \"4\" to roll all dice.");
+        int select = GetInt();
+        switch (select)
+        {
+            case 1:
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+            case 4:
+                break;
+        }
+    }
+
+    public static void PrintAviablePicks(int player) {
         int ones = ReturnNumOfNumInDices(1);
         int twos = ReturnNumOfNumInDices(2);
         int threes = ReturnNumOfNumInDices(3);
@@ -118,141 +133,244 @@ public class Yatzy {
 
         ArrayList<Pick> aviablePicks = new ArrayList<Pick>();
         //Check what picks are aviable
-        if(scoreboards[player].diceCombinations[0] && ones > 0) //ettor
+        if (scoreboards[player].diceCombinations[0] && ones > 0) //ettor
         {
             int[] n = {ones};
             aviablePicks.add(new Pick("Ettor", n));
         }
-        if(scoreboards[player].diceCombinations[1] && twos > 0) //tvåor
+        if (scoreboards[player].diceCombinations[1] && twos > 0) //tvåor
         {
             int[] n = {twos};
             aviablePicks.add(new Pick("Tvåor", n));
         }
-        if(scoreboards[player].diceCombinations[2] && threes > 0) //treor
+        if (scoreboards[player].diceCombinations[2] && threes > 0) //treor
         {
             int[] n = {threes};
             aviablePicks.add(new Pick("Treor", n));
         }
-        if(scoreboards[player].diceCombinations[3] && fours > 0) //fyror
+        if (scoreboards[player].diceCombinations[3] && fours > 0) //fyror
         {
             int[] n = {fours};
             aviablePicks.add(new Pick("Fyror", n));
         }
-        if(scoreboards[player].diceCombinations[4] && fives > 0) //femmor
+        if (scoreboards[player].diceCombinations[4] && fives > 0) //femmor
         {
             int[] n = {fives};
             aviablePicks.add(new Pick("Femmor", n));
         }
-        if(scoreboards[player].diceCombinations[5] && sixes > 0) //sexor
+        if (scoreboards[player].diceCombinations[5] && sixes > 0) //sexor
         {
             int[] n = {sixes};
             aviablePicks.add(new Pick("Sexor", n));
         }
 
-        if(scoreboards[player].diceCombinations[6]) //tretal
+        if (scoreboards[player].diceCombinations[6]) //par
+        {
+            int[] value = new int[1];
+            if(ones >= 2) {
+                value[0] = 1;
+                aviablePicks.add(new Pick("Ett par", value));
+            }
+            if(twos >= 2) {
+                value[0] = 2;
+                aviablePicks.add(new Pick("Ett par", value));
+            }
+            if(threes >= 2) {
+                value[0] = 3;
+                aviablePicks.add(new Pick("Ett par", value));
+            }
+            if(fours >= 2) {
+                value[0] = 4;
+                aviablePicks.add(new Pick("Ett par", value));
+            }
+            if(fives >= 2) {
+                value[0] = 5;
+                aviablePicks.add(new Pick("Ett par", value));
+            }
+            if(sixes >= 2) {
+                value[0] = 6;
+                aviablePicks.add(new Pick("Ett par", value));
+            }
+        }
+
+        if (scoreboards[player].diceCombinations[7]) //två par
+        {
+            ArrayList<Integer> doublePairValue = new ArrayList<Integer>();
+            //steg ett leta efter dubbla av samma
+            if(ones >= 4)
+            {
+                doublePairValue.add(1);
+                doublePairValue.add(1);
+                aviablePicks.add(new Pick("Två par", ConvertFromIntegersToInts(doublePairValue)));
+                doublePairValue.clear();
+            }
+            if(twos >= 4)
+            {
+                doublePairValue.add(2);
+                doublePairValue.add(2);
+                aviablePicks.add(new Pick("Två par", ConvertFromIntegersToInts(doublePairValue)));
+                doublePairValue.clear();
+            }
+            if(threes >= 4)
+            {
+                doublePairValue.add(3);
+                doublePairValue.add(3);
+                aviablePicks.add(new Pick("Två par", ConvertFromIntegersToInts(doublePairValue)));
+                doublePairValue.clear();
+            }
+            if(fours >= 4)
+            {
+                doublePairValue.add(4);
+                doublePairValue.add(4);
+                aviablePicks.add(new Pick("Två par", ConvertFromIntegersToInts(doublePairValue)));
+                doublePairValue.clear();
+            }
+            if(fives >= 4)
+            {
+                doublePairValue.add(5);
+                doublePairValue.add(5);
+                aviablePicks.add(new Pick("Två par", ConvertFromIntegersToInts(doublePairValue)));
+                doublePairValue.clear();
+            }
+            if(sixes>= 4)
+            {
+                doublePairValue.add(6);
+                doublePairValue.add(6);
+                aviablePicks.add(new Pick("Två par", ConvertFromIntegersToInts(doublePairValue)));
+                doublePairValue.clear();
+            }
+
+            //Steg 2 - leta efter olika
+            if(ones >= 2)
+            {
+                doublePairValue.add(1);
+            }
+            if(twos >= 2)
+            {
+                doublePairValue.add(2);
+            }
+            if(threes >= 2)
+            {
+                doublePairValue.add(3);
+            }
+            if(fours >= 2)
+            {
+                doublePairValue.add(4);
+            }
+            if(fives >= 2)
+            {
+                doublePairValue.add(5);
+            }
+            if(sixes>= 2)
+            {
+                doublePairValue.add(6);
+            }
+            if(doublePairValue.size() == 2)
+                aviablePicks.add(new Pick("Två par", ConvertFromIntegersToInts(doublePairValue)));
+        }
+
+        if (scoreboards[player].diceCombinations[8]) //tretal
         {
             if (ones >= 3 || twos >= 3 || threes >= 3 || fours >= 3 || fives >= 3 || sixes >= 3) {
                 ArrayList<Integer> temp = new ArrayList<Integer>();
-                if(ones >= 3)
+                if (ones >= 3)
                     temp.add(1);
-                if(twos >= 3)
+                if (twos >= 3)
                     temp.add(2);
-                if(threes >= 3)
+                if (threes >= 3)
                     temp.add(3);
-                if(fours >= 3)
+                if (fours >= 3)
                     temp.add(4);
-                if(fives >= 3)
+                if (fives >= 3)
                     temp.add(5);
-                if(sixes >= 3)
+                if (sixes >= 3)
                     temp.add(6);
 
                 int[] n = ConvertFromIntegersToInts(temp); //Convert list to int array
                 aviablePicks.add(new Pick("Tretal", n));
             }
         }
-        if(scoreboards[player].diceCombinations[7])//fyrtal
+        if (scoreboards[player].diceCombinations[9])//fyrtal
             if (ones >= 4 || twos >= 4 || threes >= 4 || fours >= 4 || fives >= 4 || sixes >= 4) {
                 ArrayList<Integer> temp = new ArrayList<Integer>();
-                if(ones >= 4)
+                if (ones >= 4)
                     temp.add(1);
-                if(twos >= 4)
+                if (twos >= 4)
                     temp.add(2);
-                if(threes >= 4)
+                if (threes >= 4)
                     temp.add(3);
-                if(fours >= 4)
+                if (fours >= 4)
                     temp.add(4);
-                if(fives >= 4)
+                if (fives >= 4)
                     temp.add(5);
-                if(sixes >= 4)
+                if (sixes >= 4)
                     temp.add(6);
 
                 int[] n = ConvertFromIntegersToInts(temp); //Convert list to int array
                 aviablePicks.add(new Pick("Fyrtal", n));
             }
 
-        if(scoreboards[player].diceCombinations[8]) //Lilla stege
+        if (scoreboards[player].diceCombinations[10]) //Lilla stege
         {
             int[] sortedDiceArr = dices;
             Arrays.sort(sortedDiceArr);
-            if(dices[0] != 1)
+            if (dices[0] != 1)
                 return;
-            else if(dices[1] != 2)
+            else if (dices[1] != 2)
                 return;
-            else if(dices[2] != 3)
+            else if (dices[2] != 3)
                 return;
-            else if(dices[3] != 4)
+            else if (dices[3] != 4)
                 return;
-            else if(dices[4] != 5)
+            else if (dices[4] != 5)
                 return;
             else
                 aviablePicks.add(new Pick("Lilla Stege"));
 
         }
 
-        if(scoreboards[player].diceCombinations[9]) //Stora stege
+        if (scoreboards[player].diceCombinations[11]) //Stora stege
         {
             int[] sortedDiceArr = dices;
             Arrays.sort(sortedDiceArr);
-            if(dices[1] != 2)
+            if (dices[1] != 2)
                 return;
-            else if(dices[2] != 3)
+            else if (dices[2] != 3)
                 return;
-            else if(dices[3] != 4)
+            else if (dices[3] != 4)
                 return;
-            else if(dices[4] != 5)
+            else if (dices[4] != 5)
                 return;
-            else if(dices[5] != 6)
+            else if (dices[5] != 6)
                 return;
             else
                 aviablePicks.add(new Pick("Stora Stege"));
 
         }
 
-        if(scoreboards[player].diceCombinations[10])//kåk
+        if (scoreboards[player].diceCombinations[12])//kåk
         {
             ArrayList<Integer> values = new ArrayList<Integer>();
             //steg 1
             ArrayList<Integer> temp = new ArrayList<Integer>();
-            if(ones >= 3)
+            if (ones >= 3)
                 temp.add(1);
-            if(twos >= 3)
+            if (twos >= 3)
                 temp.add(2);
-            if(threes >= 3)
+            if (threes >= 3)
                 temp.add(3);
-            if(fours >= 3)
+            if (fours >= 3)
                 temp.add(4);
-            if(fives >= 3)
+            if (fives >= 3)
                 temp.add(5);
-            if(sixes >= 3)
+            if (sixes >= 3)
                 temp.add(6);
             int[] n = ConvertFromIntegersToInts(temp); //Convert list to int array
             int biggestNum = 0;
-            if(n.length == 0)
+            if (n.length == 0)
                 return;
-            else
-            {
-                for (int i = 0; i < n.length; i++)
-                {
+            else {
+                for (int i = 0; i < n.length; i++) {
                     if (n[i] > biggestNum)
                         biggestNum = n[i];
                 }
@@ -261,32 +379,40 @@ public class Yatzy {
 
             //steg 2 mindre del
             temp.clear();
-            if(ones >= 2 && 1 != biggestNum)
+            if (ones >= 2 && 1 != biggestNum)
                 temp.add(1);
-            if(twos >= 2 && 2 != biggestNum)
+            if (twos >= 2 && 2 != biggestNum)
                 temp.add(2);
-            if(threes >= 2 && 3 != biggestNum)
+            if (threes >= 2 && 3 != biggestNum)
                 temp.add(3);
-            if(fours >= 2 && 4 != biggestNum)
+            if (fours >= 2 && 4 != biggestNum)
                 temp.add(4);
-            if(fives >= 2 && 5 != biggestNum)
+            if (fives >= 2 && 5 != biggestNum)
                 temp.add(5);
-            if(sixes >= 2 && 6 != biggestNum)
+            if (sixes >= 2 && 6 != biggestNum)
                 temp.add(6);
             n = ConvertFromIntegersToInts(temp); //Convert list to int array
             biggestNum = 0;
-            if(n.length == 0)
+            if (n.length == 0)
                 return;
-            else
-            {
-                for (int i = 0; i < n.length; i++)
-                {
+            else {
+                for (int i = 0; i < n.length; i++) {
                     if (n[i] > biggestNum)
                         biggestNum = n[i];
                 }
             }
             values.add(biggestNum);
             aviablePicks.add(new Pick("Kåk", ConvertFromIntegersToInts(values)));
+        }
+
+        if (scoreboards[player].diceCombinations[13])//chans
+        {
+            aviablePicks.add(new Pick("Chans"));
+        }
+
+        if(scoreboards[player].diceCombinations[14]) //YATZY
+        {
+            aviablePicks.add(new Pick("Yatzy"));
         }
     }
 
@@ -383,7 +509,7 @@ public class Yatzy {
         switch (diceComboName)
         {
             case "Ettor":
-                return 1 * numbers[0];
+                return numbers[0];
             case "Tvåor":
                 return 2 * numbers[0];
             case "Treor":
@@ -409,6 +535,33 @@ public class Yatzy {
     public static void SetScoreAndTickScoreboard(int player, String diceCombo) //adds the score to the players score + disables that dice combo to be used again for that player
     {
         scoreboards[player].totalScore += GetScore(diceCombo, dices);
+        switch (diceCombo)
+        {
+            case "Ettor":
+                scoreboards[player].diceCombinations[0] = false;
+                break;
+            case "Tvåor":
+                scoreboards[player].diceCombinations[1] = false;
+                break;
+            case "Treor":
+                scoreboards[player].diceCombinations[2] = false;
+                break;
+            case "Fyror":
+                scoreboards[player].diceCombinations[3] = false;
+                break;
+            case "Femmor":
+                scoreboards[player].diceCombinations[4] = false;
+                break;
+            case "Sexor":
+                scoreboards[player].diceCombinations[5] = false;
+                break;
+            case "Blank":
+                System.out.println("Player "+player+ " pleace choose what to cross");
+                System.out.println("Enter a number and press enter: ");
+                int i = GetInt();
+                scoreboards[player].diceCombinations[i-1] = false;
+                break;
+        }
     }
 
     public static void HowToInformation() throws  InterruptedException
