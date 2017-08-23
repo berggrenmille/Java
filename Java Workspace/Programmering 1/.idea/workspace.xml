@@ -25,12 +25,10 @@
       <file leaf-file-name="Yatzy.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/edu/mille/Project/Yatzy/Yatzy.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="180">
-              <caret line="548" column="47" lean-forward="false" selection-start-line="548" selection-start-column="47" selection-end-line="548" selection-end-column="47" />
+            <state relative-caret-position="159">
+              <caret line="548" column="67" lean-forward="false" selection-start-line="548" selection-start-column="67" selection-end-line="548" selection-end-column="67" />
               <folding>
                 <element signature="method#GetAviablePicks#0;class#Yatzy#0" expanded="false" />
-                <element signature="e#17226#17227#0" expanded="true" />
-                <element signature="e#17289#17290#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -433,12 +431,12 @@
       <workItem from="1503499540703" duration="765000" />
       <workItem from="1503501670346" duration="686000" />
       <workItem from="1503502874208" duration="774000" />
-      <workItem from="1503511219636" duration="1037000" />
+      <workItem from="1503511219636" duration="1170000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="62197000" />
+    <option name="totallyTimeSpent" value="62330000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-9" y="-9" width="1938" height="1048" extended-state="6" />
@@ -825,12 +823,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/edu/mille/Project/Yatzy/Yatzy.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="548" column="47" lean-forward="false" selection-start-line="548" selection-start-column="47" selection-end-line="548" selection-end-column="47" />
+        <state relative-caret-position="159">
+          <caret line="548" column="67" lean-forward="false" selection-start-line="548" selection-start-column="67" selection-end-line="548" selection-end-column="67" />
           <folding>
             <element signature="method#GetAviablePicks#0;class#Yatzy#0" expanded="false" />
-            <element signature="e#17226#17227#0" expanded="true" />
-            <element signature="e#17289#17290#0" expanded="true" />
           </folding>
         </state>
       </provider>

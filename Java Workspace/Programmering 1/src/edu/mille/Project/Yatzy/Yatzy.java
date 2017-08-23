@@ -546,7 +546,7 @@ public class Yatzy {
 
     public static void ApplyScore(int player, Pick combo)
     {
-        players[player].score += GetScore(combo, dices);
+        players[player].score += GetScore(combo.pickName, combo.num);
     }
 
     public static void TickDiceCombo(int player, Pick combo) //adds the score to the players score + disables that dice combo to be used again for that player
