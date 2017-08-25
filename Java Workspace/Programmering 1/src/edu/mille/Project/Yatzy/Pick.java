@@ -14,7 +14,7 @@ public class Pick
     {
         pickName = name;
         num = _num;
-        System.out.println(name +" " + num[0]);
+
     }
 
     @Override
@@ -46,7 +46,7 @@ public class Pick
             case "Stora Stege":
                 return pickName;
             case "Kåk":
-                return pickName + ": 3: " + num[0] +":or + 2: " + num[1] + ":or";
+                return pickName + ": " + num[0] +":or + 2: " + num[1] + ":or";
             case "Chans":
                 return  pickName;
             case "Yatzy":

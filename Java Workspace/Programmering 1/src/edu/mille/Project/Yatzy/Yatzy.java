@@ -21,6 +21,13 @@ public class Yatzy {
 
     public static void main(String[] args) throws InterruptedException//Setup
     {
+        String[] diceCombinations =
+        {
+                "Ettor", "Tvåor", "Treor", "Fyror", "Femmor", "Sexor",
+                "Ett par", "Två par", "Tretal", "Fyrtal", "Lilla Stege", "Stora Stege",
+                "Kåk", "Chans", "Yatzy"
+        }
+
         s = new Scanner(System.in);
         ran = new Random();
         os = System.getProperty("os.name");
@@ -94,7 +101,6 @@ public class Yatzy {
                 AfterRollPrompt(n);
                 count = 1;
                 PromptEnterKey();
-                //continue to roll
                 ClearConsole();
             }
             turn++;
@@ -166,12 +172,19 @@ public class Yatzy {
             for (int i = 0; i < canPick.size(); i++) {
                 System.out.println("Enter: " + (i + 1) + " to score: " + canPick.get(i).toString());
             }
+            System.out.println("Enter: " + (canPick.size()+1) + " to cross a dice combo");
             int selection = GetInt();
             if (selection == 0) {
                 ClearConsole();
                 PrintDice();
                 AfterRollPrompt(player);
-            } else if (selection > canPick.size()) {
+            }
+            else if(selection == canPick.size()+1)
+            {
+                ClearConsole();
+                foreac
+            }
+            else if (selection > canPick.size()) {
                 ClearConsole();
                 System.out.println("Faulty input try again");
                 PrintDice();
@@ -182,6 +195,7 @@ public class Yatzy {
                 System.out.println("Current score: " + players[player].score);
             }
         }
+
     }
 
     /*
@@ -231,36 +245,32 @@ public class Yatzy {
         }
         if (players[player].diceComboChecks[6]) //par
         {
-            int[] value = new int[1];
+            ArrayList<Integer> values = new ArrayList<Integer>();
+            int[] valuesArr;
             if(ones >= 2) {
-                value[0] = 1;
-                System.out.println(value[0]);
-                availablePicks.add(new Pick("Ett par", value));
+                values.add(1);
             }
             if(twos >= 2) {
-                value[0] = 2;
-                System.out.println(value[0]);
-                availablePicks.add(new Pick("Ett par", value));
+                values.add(2);
             }
             if(threes >= 2) {
-                value[0] = 3;
-                System.out.println(value[0]);
-                availablePicks.add(new Pick("Ett par", value));
+                values.add(3);
             }
             if(fours >= 2) {
-                value[0] = 4;
-                System.out.println(value[0]);
-                availablePicks.add(new Pick("Ett par", value));
+                values.add(4);
             }
             if(fives >= 2) {
-                value[0] = 5;
-                System.out.println(value[0]);
-                availablePicks.add(new Pick("Ett par", value));
+                values.add(5);
             }
             if(sixes >= 2) {
-                value[0] = 6;
-                System.out.println(value[0]);
-                availablePicks.add(new Pick("Ett par", value));
+                values.add(6);
+            }
+            valuesArr = ConvertFromIntegersToInts(values);
+            for (int i = 0; i < values.size(); i++)
+            {
+                int[] temp = new int[1];
+                temp[0] = valuesArr[i];
+                availablePicks.add(new Pick("Ett par", temp));
             }
         }
 
@@ -660,6 +670,33 @@ public class Yatzy {
                 break;
             case "Sexor":
                 players[player].diceComboChecks[5] = false;
+                break;
+            case "Ett par":
+                players[player].diceComboChecks[6] = false;
+                break;
+            case "Två par":
+                players[player].diceComboChecks[7] = false;
+                break;
+            case "Tretal":
+                players[player].diceComboChecks[8] = false;
+                break;
+            case "Fyrtal":
+                players[player].diceComboChecks[9] = false;
+                break;
+            case "Lilla Stege":
+                players[player].diceComboChecks[10] = false;
+                break;
+            case "Stora Stege":
+                players[player].diceComboChecks[11] = false;
+                break;
+            case "Kåk":
+                players[player].diceComboChecks[12] = false;
+                break;
+            case "Chans":
+                players[player].diceComboChecks[13] = false;
+                break;
+            case "Yatzy":
+                players[player].diceComboChecks[14] = false;
                 break;
             case "Blank":
                 System.out.println("Player "+player+ " pleace choose what to cross");
