@@ -70,10 +70,10 @@ public class Yatzy {
                 Yatzy.players[i].diceComboChecks[j] = true;
             for (int k = 0; k < players; k++)
             {
-                System.out.println("Player "+(k+1)+" please enter your name: ");
-                Yatzy.players[k].playerName = s.nextLine();
-            }
 
+            }
+            System.out.println("Player "+(i+1)+" please enter your name: ");
+            Yatzy.players[i].playerName = s.nextLine();
         }
         dices = new int[5];
         diceToRoll = new boolean[5];
@@ -442,7 +442,8 @@ public class Yatzy {
                     }
                 }
                 values.add(biggestNum);
-                availablePicks.add(new Pick("Kåk", ConvertFromIntegersToInts(values)));
+                if(values.size() > 1)
+                    availablePicks.add(new Pick("Kåk", ConvertFromIntegersToInts(values)));
             }
         }
 
@@ -604,13 +605,18 @@ public class Yatzy {
                 return 15;
             case "Stora Stege":
                 return 21;
+            case "Kåk":
+                int sum1 = 0;
+                sum1 += numbers[0] * 3;
+                sum1 += numbers[1] * 2;
+                return sum1;
             case "Chans":
-                int sum = 0;
+                int sum2 = 0;
                 for (int i : dices)
                 {
-                    sum += i;
+                    sum2 += i;
                 }
-                return sum;
+                return sum2;
             case "Yatzy":
                 return 50;
             default:
