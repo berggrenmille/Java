@@ -234,26 +234,32 @@ public class Yatzy {
             int[] value = new int[1];
             if(ones >= 2) {
                 value[0] = 1;
+                System.out.println(value[0]);
                 availablePicks.add(new Pick("Ett par", value));
             }
             if(twos >= 2) {
                 value[0] = 2;
+                System.out.println(value[0]);
                 availablePicks.add(new Pick("Ett par", value));
             }
             if(threes >= 2) {
                 value[0] = 3;
+                System.out.println(value[0]);
                 availablePicks.add(new Pick("Ett par", value));
             }
             if(fours >= 2) {
                 value[0] = 4;
+                System.out.println(value[0]);
                 availablePicks.add(new Pick("Ett par", value));
             }
             if(fives >= 2) {
                 value[0] = 5;
+                System.out.println(value[0]);
                 availablePicks.add(new Pick("Ett par", value));
             }
             if(sixes >= 2) {
                 value[0] = 6;
+                System.out.println(value[0]);
                 availablePicks.add(new Pick("Ett par", value));
             }
         }
@@ -387,7 +393,7 @@ public class Yatzy {
         {
             int[] sortedDiceArr = dices;
             Arrays.sort(sortedDiceArr);
-            if (dices[1] == 2 && dices[2] == 3 && dices[3] == 4 && dices[4] == 5 && dices[5] == 6)
+            if (dices[0] == 2 && dices[1] == 3 && dices[2] == 4 && dices[3] == 5 && dices[4] == 6)
                 availablePicks.add(new Pick("Stora Stege"));
         }
 
@@ -416,7 +422,8 @@ public class Yatzy {
                     if (n[i] > biggestNum)
                         biggestNum = n[i];
                 }
-                values.add(biggestNum);
+                if(biggestNum != 0)
+                 values.add(biggestNum);
 
                 //steg 2 mindre del
                 temp.clear();
@@ -441,7 +448,8 @@ public class Yatzy {
                             biggestNum = n[i];
                     }
                 }
-                values.add(biggestNum);
+                if(biggestNum != 0)
+                  values.add(biggestNum);
                 if(values.size() > 1)
                     availablePicks.add(new Pick("Kåk", ConvertFromIntegersToInts(values)));
             }
@@ -519,7 +527,7 @@ public class Yatzy {
         for (int i = 0; i < dices.length; i++)
         {
             if(diceToRoll[i] == true)
-                System.out.println("Dice "+(i+1) + " shows: " + dices[i]);
+                System.out.println("Dice "+(i+1) + " rolled: " + dices[i]);
             else
                 System.out.println("Dice "+(i+1) + " stays at: " + dices[i]);
         }

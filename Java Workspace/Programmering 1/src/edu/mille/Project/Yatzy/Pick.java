@@ -14,6 +14,7 @@ public class Pick
     {
         pickName = name;
         num = _num;
+        System.out.println(name +" " + num[0]);
     }
 
     @Override
@@ -32,7 +33,26 @@ public class Pick
                 return pickName + " " + num[0] + "st";
             case "Sexor":
                 return pickName + " " + num[0] + "st";
+            case "Ett par":
+                return  pickName + ": " + num[0] + ":or";
+            case "Två par":
+                return  pickName + ": "+ num[0] + ":or och " + num[1] + ":or";
+            case "Tretal":
+                return  pickName + ": " + num[0] + ":or";
+            case "Fyrtal":
+                return  pickName + ": " + num[0] + ":or";
+            case "Lilla Stege":
+                return  pickName;
+            case "Stora Stege":
+                return pickName;
+            case "Kåk":
+                return pickName + ": 3: " + num[0] +":or + 2: " + num[1] + ":or";
+            case "Chans":
+                return  pickName;
+            case "Yatzy":
+                return "YATZY!!!";
+            default:
+                return "Faulty name";
         }
-        return pickName;
     }
 }
