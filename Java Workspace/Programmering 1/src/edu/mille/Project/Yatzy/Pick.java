@@ -1,4 +1,4 @@
-package edu.mille.Project.Yatzy;
+package edu.mille.project.yatzy;
 
 public class Pick
 {

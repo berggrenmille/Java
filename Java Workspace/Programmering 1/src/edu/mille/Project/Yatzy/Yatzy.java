@@ -1,4 +1,4 @@
-package edu.mille.Project.Yatzy;
+package edu.mille.project.yatzy;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -9,6 +9,7 @@ import java.util.concurrent.TimeUnit;
 //2017-08-22
 public class Yatzy {
     public static String os;
+    public static String osName;
 
     public static Player[] players; //The players virtual yatzy list
     public static int[] dices; // All dices in action
@@ -26,16 +27,17 @@ public class Yatzy {
                 "Ettor", "Tvåor", "Treor", "Fyror", "Femmor", "Sexor",
                 "Ett par", "Två par", "Tretal", "Fyrtal", "Lilla Stege", "Stora Stege",
                 "Kåk", "Chans", "Yatzy"
-        }
+        };
 
         s = new Scanner(System.in);
         ran = new Random();
         os = System.getProperty("os.name");
+        osName = System.getProperty("user.name");
         System.out.println(os);
+        System.out.println(osName);
         while (running) {
             ClearConsole();
             application();
-
         }
 
         s.close();
@@ -181,8 +183,11 @@ public class Yatzy {
             }
             else if(selection == canPick.size()+1)
             {
+                /*
+                 * Cross a dice combo
+                 */
                 ClearConsole();
-                foreac
+
             }
             else if (selection > canPick.size()) {
                 ClearConsole();
