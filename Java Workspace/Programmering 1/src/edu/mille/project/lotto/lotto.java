@@ -14,7 +14,7 @@ public class lotto
     {
         maxNum = max;
         guessNum = _guessNum;
-        RatioX = new double[(int)guessNum];
+        RatioX = new double[guessNum];
         total = (long)(1/(CalculateNumerator(6)/CalculateDenominator()));
         /*
         * to calculate P(6 rätt)
@@ -29,7 +29,7 @@ public class lotto
             }
             else
             {
-                RatioX[i] = CalculateConstant(i) * (CalculateNumerator(i)/CalculateDenominator());
+                RatioX[i] = CalculateConstant(guessNum-i) * (CalculateNumerator(i)/CalculateDenominator());
             }
             System.out.println(RatioX[i]);
         }
@@ -48,8 +48,6 @@ public class lotto
         //n = what iteration we are on
         long n2 = (guessNum-n-1);
         double product = 1;
-        System.out.println("n = "+n);
-        System.out.println("n2 = "+n2);
         for (int i = 1; i<=guessNum; i++)
         {
             if(i <= n2) {
@@ -74,13 +72,16 @@ public class lotto
         return product;
     }
 
-    public static double CalculateConstant(long n)
+    public static double CalculateConstant(long numOfMisses)
     {
         //Formula
         //(n(n+1))/2
-        double k = (((n)*(n+1)))/2;
-        System.out.println(k);
-        return k;
+        long n = numOfMisses;
+        System.out.println(n);
+        System.out.println((n*(n+1))/2);
+        return (n*(n+1))/2;
+        // System.out.println(m);
+        //return m*7;
     }
 
     public static double CalculateFaculty(long f)

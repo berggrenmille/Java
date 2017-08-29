@@ -25,8 +25,8 @@ public class Yatzy {
         String[] diceCombinations =
         {
                 "Ettor", "Tvåor", "Treor", "Fyror", "Femmor", "Sexor",
-                "Ett par", "Två par", "Tretal", "Fyrtal", "Lilla Stege", "Stora Stege",
-                "Kåk", "Chans", "Yatzy"
+                "Ett par", "Två par", "Tretal", "Fyrtal", "Lilla Stege",
+                "Stora Stege", "Kåk", "Chans", "Yatzy"
         };
 
         s = new Scanner(System.in);
