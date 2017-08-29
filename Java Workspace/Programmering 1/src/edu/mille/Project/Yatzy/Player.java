@@ -1,4 +1,4 @@
-package edu.mille.project.yatzy;
+package edu.mille.project.Yatzy;
 
 public class Player
 {

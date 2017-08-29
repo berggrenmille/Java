@@ -1,4 +1,4 @@
-package edu.mille.project.yatzy;
+package edu.mille.project.Yatzy;
 
 import java.util.ArrayList;
 import java.util.Arrays;
