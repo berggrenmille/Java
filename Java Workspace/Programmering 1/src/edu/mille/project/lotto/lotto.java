@@ -4,51 +4,63 @@ public class lotto
 {
     public static int maxNum;
     public static int guessNum;
-    public static int[] numXRight;
+    public static double[] PercentX;
 
 
-    public static void CalculateResults(int max, int guessNum)
+    public static void CalculateResults(int max, int _guessNum)
     {
         maxNum = max;
-        guessNum = guessNum;
-        numXRight = new int[guessNum];
+        guessNum = _guessNum;
+        PercentX = new double[(int)guessNum];
         /*
         * to calculate P(6 rätt)
         * we take ((n(n+1))/2) * P(1:a fel) * P(2:a rätt) ...
          */
         for (int i = 1; i<= guessNum; i++)
         {
+            System.out.println("Calculating: " +CalculateNumerator(guessNum) + " "+CalculateDenominator() );
             if(i == guessNum)
             {
-
-                numXRight[i-1] = FacultyRecursive(guessNum)/Product();
+                PercentX[i-1] = CalculateNumerator(guessNum)/CalculateDenominator();
             }
+            else
+            {
+                PercentX[i-1] = CalculateConstant(i) * (CalculateNumerator(guessNum)/CalculateDenominator());
+            }
+            System.out.println(PercentX[i-1]);
         }
     }
     public static void ShowResults()
     {
-        System.out.println(numXRight[6]);
+        System.out.println("wow");
     }
 
-    public static int FacultyRecursive (int n)
+    public static double CalculateNumerator (int n)
     {
         if(n == 0)
             return 1;
         else if(n == 1)
             return 1;
         else
-            return n * FacultyRecursive(n-1);
+            return n * CalculateNumerator(n-1);
     }
 
-    public static int Product()
+    public static double CalculateDenominator()
     {
-        int product = 1;
-        for (int i = maxNum; i >= (maxNum-guessNum); i--)
+        double product = 1;
+        for (long i = maxNum; i > (maxNum-guessNum); i--)
         {
-            System.out.println("w");
             product *= i;
         }
         return product;
+    }
+
+    public static double CalculateConstant(long n)
+    {
+        //Formula
+        //(n(n+1))/2
+        double k = (n*(n+1))/2;
+        return k;
     }
 
 }
