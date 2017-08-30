@@ -29,7 +29,7 @@ public class lotto
             }
             else
             {
-                RatioX[i] = CalculateConstant(guessNum-i) * (CalculateNumerator(i)/CalculateDenominator());
+                RatioX[i] = CalculateConstant(guessNum - i-1) * (CalculateNumerator(i)/CalculateDenominator());
             }
             System.out.println(RatioX[i]);
         }
@@ -76,12 +76,21 @@ public class lotto
     {
         //Formula
         //(n(n+1))/2
+
         long n = numOfMisses;
-        System.out.println(n);
-        System.out.println((n*(n+1))/2);
-        return (n*(n+1))/2;
-        // System.out.println(m);
-        //return m*7;
+        long count = 7;
+        long product = 1;
+        if(numOfMisses == 1)
+            return 7;
+        else {
+            for (int i = 0; i < numOfMisses; i++) {
+                product *= count;
+                count--;
+            }
+            System.out.println("Misses: " + numOfMisses);
+            System.out.println("consst: " + (product / 2));
+            return product / 2;
+        }
     }
 
     public static double CalculateFaculty(long f)
