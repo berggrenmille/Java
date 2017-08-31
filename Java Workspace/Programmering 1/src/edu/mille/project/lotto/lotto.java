@@ -29,6 +29,7 @@ public class lotto
             }
             else
             {
+
                 RatioX[i] = CalculateConstant(guessNum - i-1) * (CalculateNumerator(i)/CalculateDenominator());
             }
             System.out.println(RatioX[i]);
@@ -51,11 +52,9 @@ public class lotto
         for (int i = 1; i<=guessNum; i++)
         {
             if(i <= n2) {
-                System.out.println("Product *= " + (maxNum - i+1));
                 product *= (maxNum - i);
             }
             else {
-                System.out.println("Product *= " + i);
                 product *= i;
             }
         }
@@ -77,19 +76,13 @@ public class lotto
         //Formula
         //(n(n+1))/2
 
-        long n = numOfMisses;
-        long count = 7;
-        long product = 1;
+        long n = guessNum+1-numOfMisses;
         if(numOfMisses == 1)
             return 7;
         else {
-            for (int i = 0; i < numOfMisses; i++) {
-                product *= count;
-                count--;
-            }
             System.out.println("Misses: " + numOfMisses);
-            System.out.println("consst: " + (product / 2));
-            return product / 2;
+            System.out.println("consst: " + (n * (n + 1) / 2));
+            return n * (n + 1) / 2;
         }
     }
 
