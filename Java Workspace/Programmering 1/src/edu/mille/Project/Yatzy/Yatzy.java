@@ -1,5 +1,7 @@
 package edu.mille.project.Yatzy;
 
+import edu.mille.utils.Input;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
@@ -50,7 +52,7 @@ public class Yatzy {
         System.out.println("2: Play with a friend");
         System.out.println("3: How to play");
         System.out.println("4: Exit");
-        int menuPick = GetInt();
+        int menuPick = Input.GetInt(s);
         switch (menuPick) {
             case 1:
                 Game(1);
@@ -119,7 +121,7 @@ public class Yatzy {
             System.out.println("Enter \"3\" to roll active dices.");
             System.out.println("Enter \"4\" to roll all dice.");
             System.out.println("Enter \"5\" to exit application");
-            int select = GetInt();
+            int select = Input.GetInt(s);
 
             switch (select) {
                 case 1:
@@ -153,7 +155,7 @@ public class Yatzy {
         {
             System.out.println("Enter \"1\" to check available picks.");
             System.out.println("Enter \"5\" to exit application");
-            int select = GetInt();
+            int select = Input.GetInt(s);
             switch (select) {
                 case 1:
                     ShowAvailablePicks(player);
@@ -175,7 +177,7 @@ public class Yatzy {
                 System.out.println("Enter: " + (i + 1) + " to score: " + canPick.get(i).toString());
             }
             System.out.println("Enter: " + (canPick.size()+1) + " to cross a dice combo");
-            int selection = GetInt();
+            int selection = Input.GetInt(s);
             if (selection == 0) {
                 ClearConsole();
                 PrintDice();
@@ -495,7 +497,7 @@ public class Yatzy {
         int n = -1;
         while(n != 0)
         {
-            n = GetInt();
+            n = Input.GetInt(s);
             if(n != 0) {
                 diceToRoll[n - 1] = !diceToRoll[n - 1];
                 if (diceToRoll[n - 1] == true)
@@ -568,22 +570,6 @@ public class Yatzy {
         return count;
     }
 
-    public static int GetInt()
-    {
-        boolean check = false;
-        int i = 0;
-        do {
-            if (s.hasNextInt()) {
-                i = s.nextInt();
-                check = true;
-                s.nextLine();
-            } else {
-                s.next();
-                System.out.println("Please enter numbers only, try again: ");
-            }
-        } while (!check);
-        return i;
-    }
 
     public static int[] ConvertFromIntegersToInts(ArrayList<Integer> integers)
     {
@@ -706,7 +692,7 @@ public class Yatzy {
             case "Blank":
                 System.out.println("Player "+player+ " pleace choose what to cross");
                 System.out.println("Enter a number and press enter: ");
-                int i = GetInt();
+                int i = Input.GetInt(s);
                 players[player].diceComboChecks[i-1] = false;
                 break;
         }
