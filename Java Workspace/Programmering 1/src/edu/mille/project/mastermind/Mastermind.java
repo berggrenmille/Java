@@ -8,21 +8,15 @@ import java.util.Scanner;
 //2017-09-04
 public class Mastermind
 {
-    public static Scanner s; //Reads input
-    public static Random ran; //generates random numbers
+    public Scanner s; //Reads input
+    public Random ran; //generates random numbers
     public static boolean running = true;
 
     public static void main(String[] args)
     {
-        s = new Scanner(System.in);
-        while(running)
-        {
-            application();
-        }
-        s.close();
+        MastermindGUI gui = new MastermindGUI();
     }
-
-    public static void application()
+    public void Application()
     {
         System.out.println("MASTERMIND");
         System.out.println("1: Play - 2 players");
